@@ -1,3 +1,6 @@
+import json
+
+from django.conf import settings
 from django.shortcuts import render
 
 
@@ -9,8 +12,11 @@ def index(request):
 
 
 def products(request):
+    with open(f'{settings.BASE_DIR}/mainapp/fixtures/products.json') as file:
+        json_product = json.load(file)
     context = {
-        'title': 'Каталог'
+        'title': 'Каталог',
+        'products': json_product
     }
     return render(request, 'mainapp/products.html', context)
 
