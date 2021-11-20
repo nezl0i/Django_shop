@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from django.conf import settings
 from django.shortcuts import render
@@ -6,7 +7,8 @@ from django.shortcuts import render
 
 def index(request):
     context = {
-        'title': 'Магазин'
+        'title': 'Магазин',
+        'date': datetime.now()
     }
     return render(request, 'mainapp/index.html', context)
 
