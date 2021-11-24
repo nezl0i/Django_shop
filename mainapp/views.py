@@ -4,10 +4,15 @@ from datetime import datetime
 from django.conf import settings
 from django.shortcuts import render
 
+from mainapp.models import Product
+
 
 def index(request):
+
+    products_list = Product.objects.all()[:4]
     context = {
         'title': 'Магазин',
+        'products': products_list,
         'date': datetime.now()
     }
     return render(request, 'mainapp/index.html', context)
