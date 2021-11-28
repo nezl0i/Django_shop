@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from mainapp.views import index, products, contact
+from mainapp.views import index, contact
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +26,7 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
 
     path('products/', include('mainapp.urls', namespace='products')),
-
+    path('auth/', include('authapp.urls', namespace='authapp')),
 
 ]
 
