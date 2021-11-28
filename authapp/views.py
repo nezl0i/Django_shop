@@ -52,14 +52,3 @@ def register(request):
 
     return render(request, 'authapp/register.html', context)
 
-# def register(request):
-#     if request.method == 'POST':
-#         register_form = ShopUserRegisterForm(data=request.POST)
-#         if register_form.is_valid():
-#             register_form.save()
-#             messages.success(request, 'Вы успешно зарегистрировались!')
-#             return HttpResponseRedirect(reverse('authapp:login'))
-#     else:
-#         register_form = ShopUserRegisterForm()
-#     context = {'title': 'GeekShop - Регистрация', 'register_form': register_form}
-#     return render(request, 'authapp/register.html', context)
