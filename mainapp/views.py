@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from mainapp.models import Product, ProductCategory
 
@@ -24,6 +24,24 @@ with open(f'{settings.BASE_DIR}/mainapp/fixtures/products.json') as file:
 
 def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
+
+    if pk is not None:
+        if pk == 0:
+            products_list = Product.objects.all()
+            category_item = {'name': 'Все', 'pk': 0}
+        else:
+            category_item = get_object_or_404(ProductCategory, pk=pk)
+            products_list = Product.objects.filter(category__pk=pk)
+
+        context = {
+            'title': 'Каталог',
+            'links_menu': links_menu,
+            'products': products_list,
+            'category': category_item
+        }
+
+        return render(request, 'mainapp/products_list.html', context)
+
     context = {
         'title': 'Каталог',
         'links_menu': links_menu,
