@@ -635,7 +635,7 @@ html, body {
 
 .slider {
 	height: 800px;
-	background-image: url(/static/img/slider.jpg); 
+	background-image: url(/static/img/slider.jpg);
 	/*padding-left: 98px;*/
 	padding-left: 78px;
 	padding-right: 211px;
@@ -700,15 +700,17 @@ html, body {
 	background-image: url(/static/img/basket.png);
 	position: absolute;
 	top: 63px;
-	/*left: 1210px;*/
-	left: 1185px;
+	left: 1210px;
+/*
     text-decoration: none;
     color: #555;
+    */
+
 }
 
 .basket span {
 	display: block;
-    margin-left: 30px;
+    margin-left: 90px;
     width: 150px;
 }
 
