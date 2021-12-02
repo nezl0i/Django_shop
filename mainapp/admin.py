@@ -1,6 +1,8 @@
 from django.contrib import admin
 from authapp.models import ShopUser
 from django.contrib.auth.admin import UserAdmin
+
+from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
 
 # admin.site.register(Product)

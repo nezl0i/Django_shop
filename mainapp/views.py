@@ -9,7 +9,6 @@ from mainapp.models import Product, ProductCategory
 
 
 def index(request):
-
     products_list = Product.objects.all()[:4]
     context = {
         'title': 'Магазин',
@@ -25,6 +24,12 @@ with open(f'{settings.BASE_DIR}/mainapp/fixtures/products.json') as file:
 
 def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
+    total_quantity = 0
+    total_sum = 0
+    baskets = Basket.objects.filter(user=request.user)
+    for basket in baskets:
+        total_sum += basket.sum()
+        total_quantity += basket.quantity
 
     if pk is not None:
         if pk == 0:
@@ -39,7 +44,9 @@ def products(request, pk=None):
             'links_menu': links_menu,
             'products': products_list,
             'category': category_item,
-            'basket': Basket.objects.filter(user=request.user)
+            'basket_total': total_quantity,
+            'basket_price': total_sum
+
         }
 
         return render(request, 'mainapp/products_list.html', context)
@@ -50,7 +57,8 @@ def products(request, pk=None):
         'products': json_product,
         'hot_product': Product.objects.all().first(),
         'some_products': Product.objects.all()[5:8],
-        'basket': sum(list(Basket.objects.filter(user=request.user).values_list('quantity', flat=True)))
+        'basket_total': total_quantity,
+        'basket_price': total_sum
     }
     return render(request, 'mainapp/products.html', context)
 
