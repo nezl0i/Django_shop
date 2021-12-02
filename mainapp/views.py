@@ -50,7 +50,7 @@ def products(request, pk=None):
         'products': json_product,
         'hot_product': Product.objects.all().first(),
         'some_products': Product.objects.all()[5:8],
-        # 'basket': Basket.objects.filter(user=request.user)
+        'basket': sum(list(Basket.objects.filter(user=request.user).values_list('quantity', flat=True)))
     }
     return render(request, 'mainapp/products.html', context)
 
