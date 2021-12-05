@@ -92,3 +92,14 @@ def contact(request):
         'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/contact.html', context)
+
+
+def product(request, pk):
+    links_menu = ProductCategory.objects.all()
+    context = {
+        'title': 'Товар',
+        'links_menu': links_menu,
+        'product': get_object_or_404(Product, pk=pk),
+        'basket': get_basket(request.user)
+    }
+    return render(request, 'mainapp/product.html', context)
