@@ -9,6 +9,11 @@ from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
 
 
+def get_json(path: str):
+    with open(f'{settings.BASE_DIR}{path}') as file:
+        return json.load(file)
+
+
 def get_basket(user):
     if user.is_authenticated:
         return Basket.objects.filter(user=user)
@@ -36,18 +41,8 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-with open(f'{settings.BASE_DIR}/mainapp/fixtures/products.json') as file:
-    json_product = json.load(file)
-
-
 def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
-    # total_quantity = 0
-    # total_sum = 0
-    # baskets = Basket.objects.filter(user=request.user)
-    # for basket in baskets:
-    #     total_sum += basket.sum()
-    #     total_quantity += basket.quantity
 
     if pk is not None:
         if pk == 0:
@@ -63,9 +58,6 @@ def products(request, pk=None):
             'products': products_list,
             'category': category_item,
             'basket': get_basket(request.user)
-            # 'basket_total': total_quantity,
-            # 'basket_price': total_sum
-
         }
 
         return render(request, 'mainapp/products_list.html', context)
@@ -73,22 +65,18 @@ def products(request, pk=None):
     context = {
         'title': 'Каталог',
         'links_menu': links_menu,
-        'products': json_product,
+        'products': get_json('/mainapp/fixtures/products.json'),
         'hot_product': hot_product,
         'some_products': get_same_products(hot_product),
         'basket': get_basket(request.user)
-        # 'basket_total': total_quantity,
-        # 'basket_price': total_sum
     }
     return render(request, 'mainapp/products.html', context)
 
 
 def contact(request):
-    with open(f'{settings.BASE_DIR}/mainapp/fixtures/contacts.json') as f:
-        json_contact = json.load(f)
     context = {
         'title': 'Контакты',
-        'contacts': json_contact,
+        'contacts': get_json('/mainapp/fixtures/contacts.json'),
         'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/contact.html', context)
