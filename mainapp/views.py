@@ -10,7 +10,7 @@ from mainapp.models import Product, ProductCategory
 
 
 def get_json(path: str):
-    with open(f'{settings.BASE_DIR}{path}') as file:
+    with open(f'{settings.BASE_DIR}/{path}') as file:
         return json.load(file)
 
 
@@ -65,7 +65,7 @@ def products(request, pk=None):
     context = {
         'title': 'Каталог',
         'links_menu': links_menu,
-        'products': get_json('/mainapp/fixtures/products.json'),
+        'products': get_json('mainapp/fixtures/products.json'),
         'hot_product': hot_product,
         'some_products': get_same_products(hot_product),
         'basket': get_basket(request.user)
@@ -76,7 +76,7 @@ def products(request, pk=None):
 def contact(request):
     context = {
         'title': 'Контакты',
-        'contacts': get_json('/mainapp/fixtures/contacts.json'),
+        'contacts': get_json('mainapp/fixtures/contacts.json'),
         'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/contact.html', context)
