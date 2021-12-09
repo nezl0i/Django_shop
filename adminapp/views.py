@@ -23,18 +23,19 @@ def users(request):
 @user_passes_test(lambda u: u.is_superuser)
 def user_create(request):
     if request.method == 'POST':
-        user_form = ShopUserRegisterForm(request.POST, request.FILES)
-        if user_form.is_valid():
-            user_form.save()
+        form = ShopUserRegisterForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
             return HttpResponseRedirect(reverse('adminapp:users'))
     else:
-        user_form = ShopUserRegisterForm()
+        form = ShopUserRegisterForm()
 
     context = {
         'title': 'Создание пользователя',
-        'form': user_form
+        'form': form,
+
     }
-    return render(request, 'adminapp/user_form.html', context)
+    return render(request, 'adminapp/user_register.html', context)
 
 
 # Редактирование пользователя
@@ -95,7 +96,7 @@ def category_create(request):
 
     context = {
         'title': 'Создание категории',
-        'form': form
+        'form': form,
     }
     return render(request, 'adminapp/category_form.html', context)
 
@@ -114,7 +115,8 @@ def category_update(request, pk):
 
     context = {
         'title': 'Изменение категории',
-        'form': form
+        'form': form,
+        'item': category_item,
     }
     return render(request, 'adminapp/category_form.html', context)
 
@@ -200,7 +202,7 @@ def product_delete(request, pk):
 # Просмотр продукта
 @user_passes_test(lambda u: u.is_superuser)
 def product_read(request, pk):
-    title = 'продукт/подробнее'
+    title = 'Продукт/подробно'
     product = get_object_or_404(Product, pk=pk)
     context = {
         'title': title,

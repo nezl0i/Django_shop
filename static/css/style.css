@@ -1698,3 +1698,7 @@ td:first-child {
 .related-products a:hover .text{
 	display: block;
 }
+
+.green-color {
+    color:green;
+}
