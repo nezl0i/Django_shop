@@ -1,35 +1,72 @@
 {% extends 'adminapp/base.html' %}
-{% load static %}
 {% block content %}
-    <div class="users_list">
-        <a class="btn btn-primary" style="color: white;" href="{% url 'adminapp:user_create' %}">Добавить
-            пользователя</a>
-        {% for item in object_list %}
-            <div class="user_record" {% if not item.is_active %}style="opacity: 0.5"{% endif %}>
-                <div class="user_avatar">
-                    {% if item.avatar %}
-                        <img src="/media/{{ item.avatar }}" alt=""/>
-                    {% else %}
-                        <img src="{% static 'img/default_avatar.jpg' %}" alt=""/>
-                    {% endif %}
-                </div>
-                <div class="user_role">
-                    {% if item.is_superuser %}
-                        Администратор
-                    {% else %}
-                        Пользователь
-                    {% endif %}
-                    <a class="btn btn-light" href="{% url 'adminapp:user_update' item.pk %}">Изменить</a>
-                    <br><br>
-                    <a class="btn btn-light" href="{% url 'adminapp:user_delete' item.pk %}">Удалить</a>
-                </div>
-                <div class="user_name">
-                    <p>{{ item.username }}</p>
-                    <p>{{ item.get_full_name }}</p>
-                </div>
-                <div class="user_age">{{ item.age }}</div>
-                <div class="user_email">{{ item.email }}</div>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+        <main>
+    <div class="container-fluid">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>
+            Пользователи
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Имя пользователя</th>
+                        <th>Аватар</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Адрес эл. почты</th>
+                        <th>Персонал сайта</th>
+                        <th>Активный</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for user in object_list %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'adminapp:user_update' user.id %}" style="color: dodgerblue">
+                                    {{ user.username }}
+                                </a>
+                            </td>
+                            <td>{{ user.avatar }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td class="text-center">
+                                {% if user.is_staff %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% else %}
+                                    <i class="fas fa-times-circle"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% else %}
+                                    <i class="fas fa-times-circle"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        {% endfor %}
+        </div>
+        <div class="card-footer">
+
+                <a href="{% url 'adminapp:user_create' %}" class="btn btn-outline-success">
+                    Создать пользователя
+                </a>
+
+
+        </div>
+    </div>
+    </div>
+        </main>
+        </div>
     </div>
 {% endblock %}

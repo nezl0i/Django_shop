@@ -9,7 +9,8 @@ class ShopUserAdminEditForm(ShopUserEditForm):
 
     class Meta:
         model = ShopUser
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ('username', 'email', 'avatar', 'first_name', 'last_name', 'password')
 
 
 class ProductCategoryForm(forms.ModelForm):

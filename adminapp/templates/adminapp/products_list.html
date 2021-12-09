@@ -1,34 +1,33 @@
 {% extends 'adminapp/base.html' %}
 
 {% block content %}
-    <div class="products_list">
-    <a href="{% url 'adminapp:product_create' %}" class="btn btn-light">Создать продукт</a>
-        {% for item in object_list %}
-            <div class="product_record" {% if not item.is_active %}style="opacity: 0.5"{% endif %}>
-                <div class="product_name">
-                    {{ item.name }}
-                </div>
-                {% if item.image %}
-                    <img src="/media/{{ item.image }}" alt="">
-                {% else %}
-                    <img src="/media/products_img/product-61.jpg" alt="">
-                {% endif %}
+    <div class="container ">
+        <a href="{% url 'adminapp:product_create' %}" class="btn btn-outline-primary">Создать продукт</a>
+        <div class="products_list">
 
-                <div class="product_actions">
-                    <a class="btn btn-light" style="margin-bottom: 5px"
-                       href="{% url 'adminapp:product_update' item.pk %}">Изменить</a>
-                    <a class="btn btn-light" style="margin-bottom: 5px"
-                       href="{% url 'adminapp:product_delete' item.pk %}">Удалить</a>
-                    <a class="btn btn-light" href="{% url 'adminapp:product_read' item.pk %}">Просмотр</a>
+            {% for item in object_list %}
+                <div class="product_record" {% if not item.is_active %}style="opacity: 0.5"{% endif %}>
+                    <div class="product_name">
+                        {{ item.name }}
+                    </div>
+                    <img src="/media/{{ item.image|default:'products_img/product-51.jpg' }}" class="card-img-top"
+                         alt="">
+                    <div class="product_actions">
+                        <a class="btn btn-light" style="margin-bottom: 5px"
+                           href="{% url 'adminapp:product_update' item.pk %}">Изменить</a>
+                        <a class="btn btn-light" style="margin-bottom: 5px"
+                           href="{% url 'adminapp:product_delete' item.pk %}">Удалить</a>
+                        <a class="btn btn-light" href="{% url 'adminapp:product_read' item.pk %}">Просмотр</a>
+                    </div>
+                    <div class="summary">
+                        Цена: {{ item.price }}
+                        Количество: {{ item.quantity }}
+                    </div>
+                    <div class="product_desc">
+                        {{ item.description }}
+                    </div>
                 </div>
-                <div class="summary">
-                    Цена: {{ item.price }}
-                    Количество: {{ item.quantity }}
-                </div>
-            <div class="product_desc">
-                {{ item.description }}
-            </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

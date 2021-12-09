@@ -40,18 +40,18 @@ def user_create(request):
 # Редактирование пользователя
 @user_passes_test(lambda u: u.is_superuser)
 def user_update(request, pk):
-    current_user = get_object_or_404(ShopUser, pk=pk)
+    selected_user = get_object_or_404(ShopUser, pk=pk)
     if request.method == 'POST':
-        user_form = ShopUserAdminEditForm(request.POST, request.FILES, instance=current_user)
-        if user_form.is_valid():
-            user_form.save()
+        form = ShopUserAdminEditForm(request.POST, instance=selected_user, files=request.FILES)
+        if form.is_valid():
+            form.save()
             return HttpResponseRedirect(reverse('adminapp:users'))
     else:
-        user_form = ShopUserAdminEditForm(instance=current_user)
-
+        form = ShopUserAdminEditForm(instance=selected_user)
     context = {
         'title': 'Редактирование пользователя',
-        'form': user_form
+        'form': form,
+        'user': selected_user,
     }
     return render(request, 'adminapp/user_form.html', context)
 
@@ -124,8 +124,8 @@ def category_update(request, pk):
 def category_delete(request, pk):
     category_item = get_object_or_404(ProductCategory, pk=pk)
     if request.method == 'POST':
-        category_item .is_active = False
-        category_item .save()
+        category_item.is_active = False
+        category_item.save()
         return HttpResponseRedirect(reverse('adminapp:categories'))
     context = {
         'title': 'Удаление категории',
@@ -200,4 +200,11 @@ def product_delete(request, pk):
 # Просмотр продукта
 @user_passes_test(lambda u: u.is_superuser)
 def product_read(request, pk):
-    pass
+    title = 'продукт/подробнее'
+    product = get_object_or_404(Product, pk=pk)
+    context = {
+        'title': title,
+        'object': product,
+    }
+
+    return render(request, 'adminapp/product_read.html', context)

@@ -10,7 +10,7 @@
             <li><a href="{% url 'adminapp:users' %}">Админка</a></li>
             {% endif %}
         <li><a href="{% url 'authapp:edit' %}">
-            {% if user.first_name %}{{ user.first_name }}{% else %}Admin{% endif %}</a></li>
+            {% if user.username %}{{ user.username }}{% else %}Пользователь{% endif %}</a></li>
         <li><a href="{% url 'authapp:logout' %}">Выйти</a></li>
     {% else %}
         <li><a href="{% url 'authapp:register' %}">Регистрация</a></li>
