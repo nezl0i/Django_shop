@@ -5,7 +5,7 @@
         <a class="btn btn-primary" style="color: white;" href="{% url 'adminapp:user_create' %}">Добавить
             пользователя</a>
         {% for item in object_list %}
-            <div class="user_record">
+            <div class="user_record" {% if not item.is_active %}style="opacity: 0.5"{% endif %}>
                 <div class="user_avatar">
                     {% if item.avatar %}
                         <img src="/media/{{ item.avatar }}" alt=""/>
