@@ -154,7 +154,7 @@ def product_create(request):
         form = ProductEditForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('adminapp:categories'))
+            return HttpResponseRedirect(reverse('adminapp:products', args=(1,)))
     else:
         form = ProductEditForm()
 
@@ -173,7 +173,7 @@ def product_update(request, pk):
         form = ProductEditForm(request.POST, request.FILES, instance=product_item)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('adminapp:categories'))
+            return HttpResponseRedirect(reverse('adminapp:products', args=(1,)))
     else:
         form = ProductEditForm(instance=product_item)
 
@@ -192,7 +192,7 @@ def product_delete(request, pk):
     if request.method == 'POST':
         product_item.is_active = False
         product_item.save()
-        return HttpResponseRedirect(reverse('adminapp:categories'))
+        return HttpResponseRedirect(reverse('adminapp:products', args=(1,)))
     context = {
         'title': 'Удаление товара',
         'object': product_item
