@@ -131,9 +131,10 @@ def category_delete(request, pk):
         return HttpResponseRedirect(reverse('adminapp:categories'))
     context = {
         'title': 'Удаление категории',
+        'desc': 'категорию',
         'object': category_item
     }
-    return render(request, 'adminapp/category_delete.html', context)
+    return render(request, 'adminapp/delete.html', context)
 
 
 # Продукты
@@ -195,9 +196,10 @@ def product_delete(request, pk):
         return HttpResponseRedirect(reverse('adminapp:products', args=(1,)))
     context = {
         'title': 'Удаление товара',
+        'desc': 'товар',
         'object': product_item
     }
-    return render(request, 'adminapp/product_delete.html', context)
+    return render(request, 'adminapp/delete.html', context)
 
 
 # Просмотр продукта
