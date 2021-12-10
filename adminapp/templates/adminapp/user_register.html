@@ -5,7 +5,8 @@
     <div class="container ">
         <h2 class="mt-4">{{ title }}</h2>
         <div class="card-body">
-            <form class="form-horizontal" action="{% url 'adminapp:user_create' %}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="{% url 'adminapp:user_create' %}" method="post"
+                  enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div class="mb-4">

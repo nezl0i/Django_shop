@@ -18,38 +18,38 @@
                   enctype="multipart/form-data">
                 {% csrf_token %}
 
-                    <div class="mb-4">
-                        <div class="form-group">
-                            <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя</label>
-                            {{ form.username}}
-                        </div>
+                <div class="mb-4">
+                    <div class="form-group">
+                        <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя</label>
+                        {{ form.username }}
                     </div>
-                    <div class="mb-4">
-                        <div class="form-group">
-                            <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия</label>
-                            {{ form.last_name }}
-                        </div>
+                </div>
+                <div class="mb-4">
+                    <div class="form-group">
+                        <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                        {{ form.last_name }}
                     </div>
+                </div>
 
 
-                    <div class="mb-4">
-                        <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">Выберите
-                            изображение</label>
-                        <div class="custom-file">
-                            {{ form.avatar }}
-                        </div>
+                <div class="mb-4">
+                    <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">Выберите
+                        изображение</label>
+                    <div class="custom-file">
+                        {{ form.avatar }}
                     </div>
+                </div>
 
 
-                    <div class="mb-4">
-                        <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
-                        {{ form.first_name }}
-                    </div>
-                    <div class="mb-4">
-                        <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес электронной
-                            почты</label>
-                        {{ form.email }}
-                    </div>
+                <div class="mb-4">
+                    <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="mb-4">
+                    <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес электронной
+                        почты</label>
+                    {{ form.email }}
+                </div>
 
 
                 <div class="mb-4">

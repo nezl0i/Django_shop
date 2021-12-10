@@ -3,8 +3,8 @@
 {% block content %}
     <p>Уверены, что хотите удалить пользователя {{ object.username }}?</p>
     <form method="post">
-    {% csrf_token %}
-        <input type="submit" value="Уверен" />
+        {% csrf_token %}
+        <input type="submit" value="Уверен"/>
     </form>
     <a href="{% url 'adminapp:users' %}" class="btn btn-primary">Нет, я передумал</a>
 {% endblock %}
