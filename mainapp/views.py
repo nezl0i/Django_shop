@@ -21,7 +21,7 @@ def get_basket(user):
 
 
 def get_hot_product():
-    product_list = Product.objects.all()
+    product_list = Product.objects.filter(is_active=True)
     return random.sample(list(product_list), 1)[0]
 
 

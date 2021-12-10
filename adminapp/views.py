@@ -98,7 +98,7 @@ def category_create(request):
         'title': 'Создание категории',
         'form': form,
     }
-    return render(request, 'adminapp/category_form.html', context)
+    return render(request, 'adminapp/category_create.html', context)
 
 
 # Редактирование категории
@@ -162,7 +162,7 @@ def product_create(request):
         'title': 'Создание товара',
         'form': form
     }
-    return render(request, 'adminapp/product_form.html', context)
+    return render(request, 'adminapp/product_create.html', context)
 
 
 # Редактирование продукта
@@ -179,7 +179,8 @@ def product_update(request, pk):
 
     context = {
         'title': 'Редактирование товара',
-        'form': form
+        'form': form,
+        'product': product_item
     }
     return render(request, 'adminapp/product_form.html', context)
 
