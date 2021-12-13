@@ -1,5 +1,5 @@
 {% extends 'adminapp/base.html' %}
-
+{% load my_tags %}
 
 {% block content %}
     <div class="container">
@@ -36,7 +36,7 @@
                                 </td>
                                 <td>{{ item.category }}</td>
                                 <td>{{ item.description }}</td>
-                                <td>{{ item.image }}</td>
+                                <td>{{ item.image|media_for_products }}</td>
                                 <td>{{ item.price }}</td>
                                 <td>{{ item.quantity }}</td>
                                 <td>

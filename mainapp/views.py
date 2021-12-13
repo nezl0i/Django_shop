@@ -47,7 +47,7 @@ def products(request, pk=None, page=1):
 
     if pk is not None:
         if pk == 0:
-            products_list = Product.objects.all()
+            products_list = Product.objects.filter(Product.is_active)
             category_item = {'name': 'Все', 'pk': 0}
         else:
             category_item = get_object_or_404(ProductCategory, pk=pk)

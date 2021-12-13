@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
     <div class="hero-white">
@@ -14,22 +15,22 @@
         <div class="details-products">
             <div class="details-slider">
                 <div class="slider-product">
-                    <img src="/media/{{ hot_product.image }}" alt="">
+                    <img src="{{ hot_product.image|media_for_products }}" alt="">
                 </div>
                 <div class="slider-control">
 
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="">
+                        <a href="#"><img src="{{ hot_product.image|media_for_products }}" alt="">
                             <div class="text"></div>
                         </a>
                     </div>
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="">
+                        <a href="#"><img src="{{ hot_product.image|media_for_products }}" alt="">
                             <div class="text"></div>
                         </a>
                     </div>
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="">
+                        <a href="#"><img src="{{ hot_product.image|media_for_products }}" alt="">
                             <div class="text"></div>
                         </a>
                     </div>
@@ -37,7 +38,7 @@
             </div>
 
             <div class="description">
-                <h3 class="big-bold">{{ hot_product.name}}</h3>
+                <h3 class="big-bold">{{ hot_product.name }}</h3>
                 <h3 class="red">горячее предложение</h3>
                 <p class="price">{{ hot_product.price|floatformat:2 }}<span>руб</span></p>
                 <a href="{% url 'basketapp:basket_add' hot_product.pk %}" class="red-button">
@@ -57,7 +58,7 @@
             <div class="related-products clearfix">
                 {% for product in some_products %}
                     <div class="block">
-                        <a href="{% url 'basketapp:basket_add' product.pk %}"><img src="/media/{{ product.image }}" alt="">
+                        <a href="{% url 'basketapp:basket_add' product.pk %}"><img src="{{ product.image|media_for_products }}" alt="">
                             <div class="text">
                                 <img src="{% static 'img/icon-hover.png' %}" alt="img">
                                 <h4>{{ product.name }}</h4>
