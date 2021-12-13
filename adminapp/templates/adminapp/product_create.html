@@ -4,7 +4,7 @@
     <div class="container ">
         <h2 class="mt-4">{{ title }}</h2>
         <div class="card-body">
-            <form action="{% url 'adminapp:product_create' %}" method="post"
+            <form action="{% url 'adminapp:product_create' category.pk %}" method="post"
                   enctype="multipart/form-data">
                 {% csrf_token %}
 
