@@ -140,9 +140,11 @@ def category_delete(request, pk):
 # Продукты
 @user_passes_test(lambda u: u.is_superuser)
 def products(request, pk):
+    category_item = get_object_or_404(ProductCategory, pk=pk)
     context = {
         'title': 'Товары',
-        'object_list': Product.objects.filter(category__pk=pk)
+        'object_list': Product.objects.filter(category__pk=pk),
+        'category': category_item
     }
 
     return render(request, 'adminapp/products_list.html', context)
@@ -155,7 +157,7 @@ def product_create(request):
         form = ProductEditForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('adminapp:products', args=(1,)))
+            return HttpResponseRedirect(reverse('adminapp:products', args=[1]))
     else:
         form = ProductEditForm()
 
@@ -174,7 +176,7 @@ def product_update(request, pk):
         form = ProductEditForm(request.POST, request.FILES, instance=product_item)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('adminapp:products', args=(1,)))
+            return HttpResponseRedirect(reverse('adminapp:products', args=[pk]))
     else:
         form = ProductEditForm(instance=product_item)
 

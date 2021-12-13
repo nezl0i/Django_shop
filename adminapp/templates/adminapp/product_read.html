@@ -1,3 +1,56 @@
+{#{% extends 'adminapp/base.html' %}#}
+{#{% load static %}#}
+{#{% block content %}#}
+{#    <div class="container ">#}
+{#        <div class="card" style="width: 18rem;">#}
+{#            <div class="product_read">#}
+{#                <div class="product_name">#}
+{#                    Продукт<strong>{{ object.category.name|title }} /#}
+{#                    {{ object.name|title }}</strong>#}
+{#                </div>#}
+{#                <img src="/media/{{ object.image|default:'products_images/default.jpg' }}"#}
+{#                     alt="{{ object.name }}">#}
+{#                <div class="summary">#}
+{#                    <b>цена</b>#}
+{#                    <p>{{ object.price }} руб</p>#}
+{#                    <b>количество</b>#}
+{#                    <p>{{ object.quantity }}</p>#}
+{#                    <b>в каталоге</b>#}
+{#                    <p>{% if object.is_active %}да{% else %}нет{% endif %}</p>#}
+{#                    <p>#}
+{#                        <button>#}
+{#                            <a href={% url 'adminapp:product_update' object.pk %}>#}
+{#                                редактировать#}
+{#                            </a>#}
+{#                        </button>#}
+{#                    </p>#}
+{#                    <p>#}
+{#                        <button>#}
+{#                            <a href={% url 'adminapp:product_delete' object.pk %}>#}
+{#                                удалить#}
+{#                            </a>#}
+{#                        </button>#}
+{#                    </p>#}
+{#                    <p>#}
+{#                        <button>#}
+{#                            <a href={% url 'adminapp:products' object.category.pk %}>#}
+{#                                назад#}
+{#                            </a>#}
+{#                        </button>#}
+{#                    </p>#}
+{#                </div>#}
+{#                <div class="product_desc">#}
+{#                    <b>краткая информация</b>#}
+{#                    <p>{{ object.short_desc }}</p>#}
+{#                    <br><br>#}
+{#                    <b>подробная информация</b>#}
+{#                    <p>{{ object.description }}</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+
 {% extends 'adminapp/base.html' %}
 {% load static %}
 
@@ -11,6 +64,8 @@
                 <p class="card-text">Описание: {{ object.description }}</p>
                 <p class="card-text">Цена: {{ object.price }} руб.</p>
                 <p class="card-text">Количество: {{ object.quantity }} шт.</p>
+              {% comment %}  <a href="{% url 'adminapp:product_create' object.pk %}" class="btn btn-primary">Редактировать</a>{% endcomment %}
+                <a href="{% url 'adminapp:product_delete' object.pk %}" class="btn btn-primary">Удалить</a>
                 <a href="{% url 'adminapp:products' object.pk %}" class="btn btn-primary">Назад</a>
             </div>
         </div>
