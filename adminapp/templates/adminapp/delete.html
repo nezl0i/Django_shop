@@ -1,0 +1,12 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <form class="form-inline" method="post">
+            {% csrf_token %}
+            <h4>Уверены, что хотите удалить {{ desc }} <b> {{ object.name }} </b> ?</h4>
+            <button type="submit" class="btn btn-outline-danger">Удалить</button>
+            <a href="{% url 'adminapp:categories' %}" class="btn btn-outline-success">Нет, я передумал</a>
+        </form>
+    </div>
+{% endblock %}

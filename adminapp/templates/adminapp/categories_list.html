@@ -1,0 +1,96 @@
+{% extends 'adminapp/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Категории товаров
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>Описание</th>
+                            <th>Удаление</th>
+                            <th>Продукты</th>
+                            <th>Статус</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for item in object_list %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'adminapp:category_update' item.pk %}"
+                                       style="color: dodgerblue">
+                                        {{ item.name }}
+                                    </a>
+                                </td>
+                                <td>{{ item.description }}</td>
+                                <td>
+                                    <a href="{% url 'adminapp:category_delete' item.pk %}"
+                                       style="color: dodgerblue">
+                                        Delete
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'adminapp:products' item.pk %}"
+                                       style="color: dodgerblue">
+                                        Товары
+                                    </a>
+                                </td>
+
+                                <td class="text-center">
+                                    {% if item.is_active %}
+                                        <i class="fas fa-check-circle"></i>
+                                    {% else %}
+                                        <i class="fas fa-times-circle"></i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'adminapp:category_create' %}" class="btn btn-outline-success">
+                    Добавить категорию
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{#{% extends 'adminapp/base.html' %}#}
+{##}
+{#{% block content %}#}
+{#    <div class="container ">#}
+{#        <a href="{% url 'adminapp:category_create' %}" class="btn btn-outline-success">Создать категорию</a>#}
+{##}
+{#        <div class="categories_list">#}
+{##}
+{#            {% for item in object_list %}#}
+{#                <div class="category_record" {% if not item.is_active %}style="opacity: 0.5"{% endif %}>#}
+{#                    <div class="category_name">#}
+{#                        {{ item.name }}#}
+{#                    </div>#}
+{#                    <div class="category_actions">#}
+{#                        <a class="btn btn-light" style="margin-bottom: 5px"#}
+{#                           href="{% url 'adminapp:category_update' item.pk %}">Изменить</a>#}
+{#                        <a class="btn btn-light" style="margin-bottom: 5px"#}
+{#                           href="{% url 'adminapp:category_delete' item.pk %}">Удалить</a>#}
+{#                        <a class="btn btn-light" href="{% url 'adminapp:products' item.pk %}">Продукты</a>#}
+{#                    </div>#}
+{#                    <div class="category_desc">{{ item.description }}</div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{##}
+{##}
+{#{% endblock %}#}

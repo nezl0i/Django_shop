@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+            {{ title|title }}
+        {% endblock %}
+    </title>
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+
+        <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+    {% endblock %}
+    {% block js %}
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'js/all.min.js' %}"></script>
+    {% endblock %}
+</head>
+<body class="sb-nav-fixed">
+
+
+{#    <div class="admin_menu">#}
+{#        <ul class="menu">#}
+{#            <li>#}
+{#                <a href="{% url 'index' %}">На сайт</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="{% url 'adminapp:users' %}">Пользователи</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="{% url 'adminapp:categories' %}">Категории</a>#}
+{#            </li>#}
+{#        </ul>#}
+{#    </div>#}
+<div class="container text-center">
+    <div class="h2 text-center head">
+        Панель Администратора
+    </div>
+    <hr>
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        Домой
+                    </a>
+                    <a class="nav-link" href="{% url 'adminapp:users' %}">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        Пользователи
+                    </a>
+                    <a class="nav-link" href="{% url 'adminapp:categories' %}">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        Категории
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+
+</body>
+</html>

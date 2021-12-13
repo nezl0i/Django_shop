@@ -1,0 +1,19 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <form class="form-inline" method="post">
+            {% csrf_token %}
+            <h4>Уверены, что хотите удалить пользователя <b> {{ object.username }} </b> ?</h4>
+            <button type="submit" class="btn btn-outline-danger">Удалить</button>
+            <a href="{% url 'adminapp:users' %}" class="btn btn-outline-success">Нет, я передумал</a>
+        </form>
+    </div>
+    {#    <p>Уверены, что хотите удалить пользователя {{ object.username }}?</p>#}
+    {#    <form method="post">#}
+    {#        {% csrf_token %}#}
+    {#        <input type="submit" value="Уверен"/>#}
+    {#    </form>#}
+    {#    <a href="{% url 'adminapp:users' %}" class="btn btn-primary">Нет, я передумал</a>#}
+{% endblock %}
