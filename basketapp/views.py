@@ -56,5 +56,5 @@ def basket_edit(request, pk, quantity):
             basket_item.delete()
 
         basket_list = Basket.objects.filter(user=request.user)
-        result = render_to_string('basketapp/includes/inc_basket_list.html', {'basket_list': basket_list})
+        result = render_to_string('basketapp/user_profile_basket.html', {'basket_list': basket_list})
         return JsonResponse({'result': result})

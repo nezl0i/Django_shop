@@ -28,7 +28,6 @@ window.onload = function () {
     // добавляем ajax-обработчик для обновления количества товара
     $('.basket_list').on('click', 'input[type="number"]', function () {
         const target_href = event.target;
-        console.log(target_href)
 
         if (target_href) {
 
