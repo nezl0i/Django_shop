@@ -9,7 +9,7 @@
         {% if user.is_superuser %}
             <li><a href="{% url 'adminapp:users' %}">Админка</a></li>
             {% endif %}
-        <li><a href="{% url 'authapp:edit' %}">
+        <li><a href="{% url 'authapp:profile' user.pk %}">
             {% if user.username %}{{ user.username }}{% else %}Пользователь{% endif %}</a></li>
         <li><a href="{% url 'authapp:logout' %}">Выйти</a></li>
     {% else %}

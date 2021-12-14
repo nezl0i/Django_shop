@@ -5,14 +5,24 @@ from authapp.models import ShopUser
 
 
 class ShopUserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите пароль'
+    }))
+
     class Meta:
         model = ShopUser
-        fields = ('username', 'password',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+        fields = ('username', 'password')
+    # class Meta:
+    #     model = ShopUser
+    #     fields = ('username', 'password',)
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     for field_name, field in self.fields.items():
+    #         field.widget.attrs['class'] = 'form-control py-4'
 
 
 class ShopUserRegisterForm(UserCreationForm):
@@ -33,22 +43,31 @@ class ShopUserRegisterForm(UserCreationForm):
 
 
 class ShopUserEditForm(UserChangeForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'readonly': True}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
+
     class Meta:
         model = ShopUser
-        fields = ('username', 'first_name', 'age', 'email', 'password', 'avatar',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
-            if field_name == 'password':
-                field.widget = forms.HiddenInput()
-
-    def clean_age(self):
-        data_age = self.cleaned_data['age']
-        if data_age < 18:
-            raise forms.ValidationError('Ваш возраст слишком маленький.')
-        return data_age
+        fields = ('username', 'email', 'first_name', 'last_name', 'image')
+    # class Meta:
+    #     model = ShopUser
+    #     fields = ('username', 'first_name', 'age', 'email', 'password', 'avatar',)
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     for field_name, field in self.fields.items():
+    #         field.widget.attrs['class'] = 'form-control py-4'
+    #         if field_name == 'password':
+    #             field.widget = forms.HiddenInput()
+    #
+    # def clean_age(self):
+    #     data_age = self.cleaned_data['age']
+    #     if data_age < 18:
+    #         raise forms.ValidationError('Ваш возраст слишком маленький.')
+    #     return data_age
 
     # username = forms.CharField(widget=forms.TextInput(attrs={
     #     'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя'}))
