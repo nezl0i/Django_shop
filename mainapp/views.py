@@ -35,14 +35,13 @@ def get_same_products(hot_product):
 class IndexView(ListView):
     model = Product
     template_name = 'mainapp/index.html'
+    title = 'GeekShop'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        products_list = Product.objects.all()[:4]
-
-        context_data['title'] = 'Магазин'
+        context_data['title'] = self.title
         context_data['date'] = datetime.now()
-        context_data['products'] = products_list
+        context_data['products'] = Product.objects.all()[:4]
         context_data['basket'] = get_basket(self.request.user)
         return context_data
 
