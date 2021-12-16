@@ -47,11 +47,11 @@ def products(request, pk=None, page=1):
 
     if pk is not None:
         if pk == 0:
-            products_list = Product.objects.filter(Product.is_active)
+            products_list = Product.objects.filter(is_active=True)
             category_item = {'name': 'Все', 'pk': 0}
         else:
             category_item = get_object_or_404(ProductCategory, pk=pk)
-            products_list = Product.objects.filter(category__pk=pk)
+            products_list = Product.objects.filter(category__pk=pk, is_active=True)
 
         # page = request.GET.get('page', 1)
         paginator = Paginator(products_list, 2)
