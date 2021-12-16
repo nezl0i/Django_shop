@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load main_tags %}
 
 {% block content %}
     <div class="slider">
@@ -13,7 +14,7 @@
             <p>Только <b>{{ date|date:"d E Y" }} г.</b>
                 скидки 25 %!
             </p>
-            <a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png' %}" alt=""></a>
+            <a href="{% url 'products:products' %}" class="button-order">заказать <img src="{% static 'img/arrow.png' %}" alt=""></a>
         </div>
         <div class="navi">
             <a href="#"></a><a href="#"></a><a href="#"></a>
@@ -24,7 +25,7 @@
         <div class="featured-menu">
             <a class="active" href="#">Популярные</a><a href="#">Новинки</a>
         </div>
-        <a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+        <a class="explore" href="{% url 'products:category' 0 %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
         <div class="clearfix">
         </div>
         <div class="tab-content">
