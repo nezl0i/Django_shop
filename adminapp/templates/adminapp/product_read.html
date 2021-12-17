@@ -67,7 +67,7 @@
                 <p class="card-text">Количество: {{ object.quantity }} шт.</p>
               {% comment %}  <a href="{% url 'adminapp:product_create' object.pk %}" class="btn btn-primary">Редактировать</a>{% endcomment %}
                 <a href="{% url 'adminapp:product_delete' object.pk %}" class="btn btn-primary">Удалить</a>
-                <a href="{% url 'adminapp:products' object.pk %}" class="btn btn-primary">Назад</a>
+                <a href="{% url 'adminapp:products' object.category.pk %}" class="btn btn-primary">Назад</a>
             </div>
         </div>
     </div>
