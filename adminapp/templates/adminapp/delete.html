@@ -6,7 +6,11 @@
             {% csrf_token %}
             <h4>Уверены, что хотите удалить {{ desc }} <b> {{ object.name }} </b> ?</h4>
             <button type="submit" class="btn btn-outline-danger">Удалить</button>
-            <a href="{% url 'adminapp:categories' %}" class="btn btn-outline-success">Нет, я передумал</a>
+            {% if desc == 'категорию' %}
+                <a href="{% url 'adminapp:categories' %}" class="btn btn-outline-success">Нет, я передумал</a>
+            {% else %}
+                <a href="{% url 'adminapp:products' object.category.pk %}" class="btn btn-outline-success">Нет, я передумал</a>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

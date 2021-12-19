@@ -18,12 +18,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from mainapp.views import index, contact
+from mainapp.views import IndexView, ContactViews
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('contact/', contact, name='contact'),
+    path('', IndexView.as_view(), name='index'),
+    path('contact/', ContactViews.as_view(), name='contact'),
 
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='authapp')),

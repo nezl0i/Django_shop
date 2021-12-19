@@ -1,12 +1,25 @@
 {% extends 'basketapp/base.html' %}
 
 {% block content %}
-    <div class="basket_list">
-    {% include 'basketapp/includes/inc_basket_list.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                {% include 'basketapp/user_profile_basket.html' %}
+            </div>
+        </div>
+        <a class="btn btn-outline-info float-left" href="{% url 'index' %}">На главную</a>
     </div>
-    <hr>
-<button class="btn btn-round">
-    <a href="{% url 'index' %}">На главную</a>
-</button>
 
+
+    {#    <div class="basket_list">#}
+    {#    <div class="container">#}
+    {#        <div class="row">#}
+    {#    {% include 'basketapp/includes/inc_basket_list.html' %}#}
+    {#    </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <hr>#}
+    {#<button class="btn btn-round">#}
+    {#    <a href="{% url 'index' %}">На главную</a>#}
+    {#</button>#}
 {% endblock %}
