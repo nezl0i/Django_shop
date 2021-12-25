@@ -1,3 +1,7 @@
+from datetime import datetime
+import hashlib
+from random import random
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 
@@ -34,6 +38,15 @@ class ShopUserRegisterForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
+
+    def save(self, *args, **kwargs):
+        user = super().save(*args, **kwargs)
+        user.is_active = False
+        salt = hashlib.sha1(str(random()).encode('utf8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+        user.activation_key_expired = datetime.now()
+        # user.save()
+        return user
 
     def clean_age(self):
         data_age = self.cleaned_data['age']

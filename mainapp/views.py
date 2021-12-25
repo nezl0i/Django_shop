@@ -16,12 +16,6 @@ def get_json(path: str):
         return json.load(file)
 
 
-def get_basket(user):
-    if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    return []
-
-
 def get_hot_product():
     product_list = Product.objects.filter(is_active=True)
     return random.sample(list(product_list), 1)[0]
@@ -42,7 +36,6 @@ class IndexView(ListView):
         context_data['title'] = self.title
         context_data['date'] = datetime.now()
         context_data['products'] = Product.objects.all()[:4]
-        context_data['basket'] = get_basket(self.request.user)
         return context_data
 
 
@@ -71,7 +64,6 @@ def products(request, pk=None, page=1):
             'links_menu': links_menu,
             'products': products_paginator,
             'category': category_item,
-            'basket': get_basket(request.user)
         }
 
         return render(request, 'mainapp/products_list.html', context)
@@ -82,7 +74,6 @@ def products(request, pk=None, page=1):
         'products': get_json('mainapp/fixtures/products.json'),
         'hot_product': hot_product,
         'some_products': get_same_products(hot_product),
-        'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/products.html', context)
 
@@ -99,7 +90,6 @@ class ContactViews(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         context['contacts'] = self.get_queryset()
-        context['basket'] = get_basket(self.request.user)
         return context
 
 
@@ -115,7 +105,6 @@ class ProductView(ListView):
         context_data['title'] = 'Товар'
         context_data['links_menu'] = links_menu
         context_data['product'] = product
-        context_data['basket'] = get_basket(self.request.user)
         return context_data
 
 # def index(request):
