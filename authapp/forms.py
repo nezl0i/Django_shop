@@ -4,7 +4,7 @@ from random import random
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import ModelForm
+from django.forms import ModelForm, HiddenInput
 
 from authapp.models import ShopUser, ShopUserProfile
 
@@ -90,11 +90,6 @@ class CombinedForm(forms.Form):
         return cleaned_data
 
 
-
-
-
-
-
 class ShopUserEditForm(UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'readonly': True}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
@@ -149,10 +144,10 @@ class ShopUserProfileForm(ModelForm):
         fields = ('tagline', 'about_me', 'gender')
         form_class = ShopUserEditForm
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     for field_name, field in self.fields.items():
-    #         field.widget.attrs['class'] = 'form-control py-4'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control py-4'
 
 
 class ProfileForm(CombinedForm):

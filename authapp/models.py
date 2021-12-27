@@ -29,15 +29,17 @@ class ShopUser(AbstractUser):
 class ShopUserProfile(models.Model):
     MALE = 'M'
     FEMALE = 'F'
+    UNKNOWN = '--'
     GENDERS = (
         (MALE, 'М'),
-        (FEMALE, 'Ж')
+        (FEMALE, 'Ж'),
+        (UNKNOWN, '--')
     )
 
     user = models.OneToOneField(ShopUser, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
     tagline = models.CharField(max_length=128, **NULLABLE)
     about_me = models.TextField(max_length=512, **NULLABLE)
-    gender = models.CharField(choices=GENDERS, max_length=1)
+    gender = models.CharField(choices=GENDERS, max_length=3)
 
     @receiver(post_save, sender=ShopUser)
     def create_user_profile(sender, instance, created, **kwargs):
