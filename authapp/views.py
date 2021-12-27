@@ -55,16 +55,6 @@ class UserProfileView(UpdateView, Multiple):
     def get_success_url(self):
         return reverse('authapp:profile', args=[self.kwargs.get('pk')])
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        if form.is_valid():
-            user = form.save()
-            send_verify_mail(user)
-        return super().form_valid(form)
-
-    # def get_queryset(self, **kwargs):
-    #     return
-
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('pk')
