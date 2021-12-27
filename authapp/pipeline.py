@@ -48,5 +48,11 @@ def save_user_profile(backend, user, response, *args, **kwargs):
             raise AuthForbidden('social_core.backends.vk.VKOAuth2')
         user.age = age
 
+    photo = response.get('photo_200', '')
+    if photo:
+        user.avatar = photo
+        print(user.avatar)
+
     user.save()
+
 
