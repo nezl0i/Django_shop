@@ -1,13 +1,14 @@
 from django.contrib import auth
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
+from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView, CreateView
 
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
-from authapp.models import ShopUser
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileForm, ProfileForm
+from authapp.models import ShopUser, ShopUserProfile
 from basketapp.models import Basket
 from django.conf import settings
 
@@ -26,14 +27,43 @@ class UserLogoutView(LogoutView):
     template_name = 'mainapp/index.html'
 
 
-class UserProfileView(UpdateView):
+class Multiple(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(Multiple, self).__init__(*args, **kwargs)
+        self.user = kwargs.pop('user', )
+
+    def save(self, commit=True):
+        obj = super(Multiple, self).save(commit=False)
+        obj.user = self.user
+        if commit:
+            return obj.save()
+        else:
+            return obj
+
+
+class UserProfileView(UpdateView, Multiple):
     model = ShopUser
     template_name = 'authapp/profile.html'
-    form_class = ShopUserEditForm
+    form_class = ProfileForm
     success_url = reverse_lazy('authapp:profile')
+    # fields = ('username', 'email', 'first_name', 'about_me')
+
+    def save(self, **kwargs):
+        data = super(UserProfileView, self).save(commit=False)
+        return data.save()
 
     def get_success_url(self):
         return reverse('authapp:profile', args=[self.kwargs.get('pk')])
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        if form.is_valid():
+            user = form.save()
+            send_verify_mail(user)
+        return super().form_valid(form)
+
+    # def get_queryset(self, **kwargs):
+    #     return
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -71,7 +101,8 @@ def verify(request, email, activation_key):
             user.activation_key = None
             user.activation_key_expired = None
             user.save()
-            auth.login(request, user)
+            # auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return render(request, 'authapp/verify.html')
 
 

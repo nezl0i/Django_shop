@@ -4,8 +4,9 @@ from random import random
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.forms import ModelForm
 
-from authapp.models import ShopUser
+from authapp.models import ShopUser, ShopUserProfile
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -55,6 +56,45 @@ class ShopUserRegisterForm(UserCreationForm):
         return data_age
 
 
+class CombinedForm(forms.Form):
+    form_classes = []
+
+    def __init__(self, *args, **kwargs):
+        super(CombinedForm, self).__init__(*args, **kwargs)
+        for f in self.form_classes:
+            name = f.__name__.lower()
+            setattr(self, name, f(*args, **kwargs))
+            form = getattr(self, name)
+            self.fields.update(form.fields)
+            self.initial.update(form.initial)
+
+    def is_valid(self):
+        isValid = True
+        for f in self.form_classes:
+            name = f.__name__.lower()
+            form = getattr(self, name)
+            if not form.is_valid():
+                isValid = False
+        for f in self.form_classes:
+            name = f.__name__.lower()
+            form = getattr(self, name)
+            self.errors.update(form.errors)
+        return isValid
+
+    def clean(self):
+        cleaned_data = super(CombinedForm, self).clean()
+        for f in self.form_classes:
+            name = f.__name__.lower()
+            form = getattr(self, name)
+            cleaned_data.update(form.cleaned_data)
+        return cleaned_data
+
+
+
+
+
+
+
 class ShopUserEditForm(UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'readonly': True}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
@@ -100,3 +140,22 @@ class ShopUserEditForm(UserChangeForm):
     # class Meta:
     #     model = ShopUser
     #     fields = ('username', 'email', 'first_name', 'last_name', 'avatar', 'password1', 'password2')
+
+
+class ShopUserProfileForm(ModelForm):
+
+    class Meta:
+        model = ShopUserProfile
+        fields = ('tagline', 'about_me', 'gender')
+        form_class = ShopUserEditForm
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     for field_name, field in self.fields.items():
+    #         field.widget.attrs['class'] = 'form-control py-4'
+
+
+class ProfileForm(CombinedForm):
+    form_classes = [ShopUserEditForm, ShopUserProfileForm]
+
+

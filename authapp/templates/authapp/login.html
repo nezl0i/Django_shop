@@ -49,8 +49,13 @@
                             </form>
                         </div>
                         <div class="card-footer text-center">
+{#                            <div class=""><a href="{% url 'social:begin' 'vk-oauth2' %}?next=/">Вконтакте</a></div>#}
+                            <a class="btn btn-block btn-social btn-vk" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
+                                <span class="fa fa-vk"></span>
+                            </a>
                             <div class="small"><a href="{% url 'authapp:register' %}">Нужен аккаунт?
                                 Зарегистрируйся!</a></div>
+
                         </div>
                     </div>
                 </div>

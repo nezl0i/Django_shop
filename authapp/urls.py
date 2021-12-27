@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('profile/<int:pk>/', login_required(UserProfileView.as_view()), name='profile'),
+    # path('profile/<int:pk>/', login_required(edit), name='profile'),
     path('register/', UserRegistrationView.as_view(), name='register'),
     # path('register/', register, name='register'),
     path('verify/<email>/<activation_key>', verify, name='verify'),
