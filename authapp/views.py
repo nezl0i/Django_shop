@@ -1,13 +1,14 @@
 from django.contrib import auth
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
+from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView, CreateView
 
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
-from authapp.models import ShopUser
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileForm, ProfileForm
+from authapp.models import ShopUser, ShopUserProfile
 from basketapp.models import Basket
 from django.conf import settings
 
@@ -29,8 +30,9 @@ class UserLogoutView(LogoutView):
 class UserProfileView(UpdateView):
     model = ShopUser
     template_name = 'authapp/profile.html'
-    form_class = ShopUserEditForm
+    form_class = ProfileForm
     success_url = reverse_lazy('authapp:profile')
+    # fields = ('username', 'email', 'first_name', 'about_me')
 
     def get_success_url(self):
         return reverse('authapp:profile', args=[self.kwargs.get('pk')])
@@ -71,7 +73,7 @@ def verify(request, email, activation_key):
             user.activation_key = None
             user.activation_key_expired = None
             user.save()
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return render(request, 'authapp/verify.html')
 
 
@@ -124,22 +126,26 @@ def send_verify_mail(user):
 #     }
 #     return render(request, 'authapp/login.html', context)
 
-# def edit(request):
-#     if request.method == 'POST':
-#         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-#         if edit_form.is_valid():
-#             edit_form.save()
-#             return HttpResponseRedirect(reverse('authapp:profile'))
-#     else:
-#         edit_form = ShopUserEditForm(instance=request.user)
-#
-#     context = {
-#         'title': 'Редактирование',
-#         'window_title': 'Редактирование профиля',
-#         'form': edit_form
-#     }
-#
-#     return render(request, 'authapp/profile.html', context)
+def profile(request, pk):
+    if request.method == 'POST':
+        edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
+        edit_profile_form = ShopUserProfileForm(request.POST, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and edit_profile_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('authapp:profile', args=[pk]))
+    else:
+        edit_form = ShopUserEditForm(instance=request.user)
+        edit_profile_form = ShopUserProfileForm(instance=request.user.shopuserprofile)
+
+    context = {
+        'title': 'Редактирование',
+        'window_title': 'Редактирование профиля',
+        'form': edit_form,
+        'profile_form': edit_profile_form,
+        'basket_list': Basket.objects.filter(user=request.user)
+    }
+
+    return render(request, 'authapp/profile.html', context)
 
 # def logout(request):
 #     auth.logout(request)

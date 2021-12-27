@@ -23,6 +23,7 @@ from mainapp.views import IndexView, ContactViews
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
+    path('', include('social_django.urls', namespace='social')),
     path('contact/', ContactViews.as_view(), name='contact'),
 
     path('products/', include('mainapp.urls', namespace='products')),
