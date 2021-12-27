@@ -10,13 +10,13 @@
                 <h4 class="mt-3 mb-3">Профиль</h4>
                 <div class="col-lg-12 text-center">
                     <img width="120" height="120"
-                         {% if user.is_authenticated and not backends.associated %}
-                            src="{{ user.avatar|media_for_users}}"
-                            class="img-thumbnail" alt="">
-                         {% else %}
-                            src="{{ user.avatar }}"
-                            class="img-thumbnail" alt="">
-                    {% endif %}
+                            {% if user.is_authenticated and not backends.associated %}
+                         src="{{ user.avatar|media_for_users }}"
+                         class="img-thumbnail" alt="">
+                            {% else %}
+                                src="{{ user.avatar }}"
+                                class="img-thumbnail" alt="">
+                            {% endif %}
                 </div>
                 <hr>
                 <form action="{% url 'authapp:profile' user.pk %}" method="post" enctype="multipart/form-data">
