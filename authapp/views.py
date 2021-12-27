@@ -27,21 +27,7 @@ class UserLogoutView(LogoutView):
     template_name = 'mainapp/index.html'
 
 
-class Multiple(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(Multiple, self).__init__(*args, **kwargs)
-        self.user = kwargs.pop('user', )
-
-    def save(self, commit=True):
-        obj = super(Multiple, self).save(commit=False)
-        obj.user = self.user
-        if commit:
-            return obj.save()
-        else:
-            return obj
-
-
-class UserProfileView(UpdateView, Multiple):
+class UserProfileView(UpdateView):
     model = ShopUser
     template_name = 'authapp/profile.html'
     form_class = ProfileForm
