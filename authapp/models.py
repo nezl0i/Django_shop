@@ -30,6 +30,7 @@ class ShopUserProfile(models.Model):
     MALE = 'M'
     FEMALE = 'F'
     UNKNOWN = '--'
+    
     GENDERS = (
         (MALE, 'М'),
         (FEMALE, 'Ж'),

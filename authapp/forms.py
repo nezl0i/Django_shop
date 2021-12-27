@@ -99,17 +99,14 @@ class ShopUserEditForm(UserChangeForm):
 
     class Meta:
         model = ShopUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'image')
-    # class Meta:
-    #     model = ShopUser
-    #     fields = ('username', 'first_name', 'age', 'email', 'password', 'avatar',)
-    #
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     for field_name, field in self.fields.items():
-    #         field.widget.attrs['class'] = 'form-control py-4'
-    #         if field_name == 'password':
-    #             field.widget = forms.HiddenInput()
+        fields = ('username', 'email', 'age', 'first_name', 'last_name', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control py-4'
+            if field_name == 'password':
+                field.widget = forms.HiddenInput()
     #
     # def clean_age(self):
     #     data_age = self.cleaned_data['age']
