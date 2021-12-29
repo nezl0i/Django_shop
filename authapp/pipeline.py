@@ -1,9 +1,7 @@
-from datetime import datetime
-
 import requests
+from datetime import datetime
 from django.conf import settings
 from social_core.exceptions import AuthForbidden
-
 from authapp.models import ShopUserProfile
 
 
@@ -13,7 +11,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
 
     base_url = 'https://api.vk.com/method/users.get/'
 
-    fields_for_request = ['bdate', 'sex', 'about']
+    fields_for_request = ['bdate', 'sex', 'about', 'photo_200']
     params = {
         'fields': ','.join(fields_for_request),
         'access_token': response.get('access_token'),
@@ -48,11 +46,12 @@ def save_user_profile(backend, user, response, *args, **kwargs):
             raise AuthForbidden('social_core.backends.vk.VKOAuth2')
         user.age = age
 
-    photo = response.get('photo_200', '')
-    if photo:
-        user.avatar = photo
-        print(user.avatar)
+    if 'photo_200' in api_data:
+        avatar_url = api_data['photo_200']
+        avatar_response = requests.get(avatar_url)
+        avatar_path = f'{settings.MEDIA_ROOT}/users/{user.pk}.jpg'
+        with open(avatar_path, 'wb') as avatar_file:
+            avatar_file.write(avatar_response.content)
+        user.avatar = f'{settings.MEDIA_URL}users/{user.pk}.jpg'
 
     user.save()
-
-

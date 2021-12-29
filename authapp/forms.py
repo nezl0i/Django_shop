@@ -1,10 +1,9 @@
-from datetime import datetime
 import hashlib
 from random import random
-
+from datetime import datetime
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import ModelForm, HiddenInput
+from django.forms import ModelForm
 
 from authapp.models import ShopUser, ShopUserProfile
 
@@ -149,5 +148,3 @@ class ShopUserProfileForm(ModelForm):
 
 class ProfileForm(CombinedForm):
     form_classes = [ShopUserEditForm, ShopUserProfileForm]
-
-

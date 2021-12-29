@@ -29,12 +29,12 @@ class ShopUser(AbstractUser):
 class ShopUserProfile(models.Model):
     MALE = 'M'
     FEMALE = 'F'
-    UNKNOWN = '--'
+    UNKNOWN = 'U'
     
     GENDERS = (
         (MALE, 'М'),
         (FEMALE, 'Ж'),
-        (UNKNOWN, '--')
+        (UNKNOWN, 'Н')
     )
 
     user = models.OneToOneField(ShopUser, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
