@@ -8,6 +8,7 @@
             {% csrf_token %}
             <input type="submit" class="btn btn-danger" value="Удалить">
         </form>
-    <a href="{% url 'ordersapp:list' %}" class="btn btn-info">Нет, не подтверждаю</a>
+        <br>
+        <a href="{% url 'ordersapp:list' %}" class="btn btn-info">Передумал</a>
     </div>
 {% endblock %}
