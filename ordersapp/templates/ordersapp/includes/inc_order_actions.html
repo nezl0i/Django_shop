@@ -1,0 +1,20 @@
+<div class="container text-center">
+    {% if object.status == 'FM' %}
+        <button class="btn btn-outline-success">
+            <a href="{% url 'ordersapp:complete' object.pk %}">
+                совершить покупку
+            </a>
+        </button>
+        <button class="btn btn-outline-danger">
+            <a href="{% url 'ordersapp:delete' object.pk %}">удалить</a>
+        </button><br>
+    {% endif %}
+    <button class="btn btn-link">
+        <a href="{% url 'ordersapp:list' %}">
+            к списку заказов
+        </a>
+    </button>
+    <button class="btn btn-link">
+        <a href="{% url 'index' %}">на главную</a>
+    </button>
+</div>

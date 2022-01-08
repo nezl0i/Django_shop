@@ -10,6 +10,9 @@ from mainapp.models import ProductCategory, Product
 
 
 # Пользователи CBV
+from ordersapp.models import Order
+
+
 class UsersListView(DataMixin, ListView):
     model = ShopUser
     template_name = 'adminapp/users_list.html'
@@ -17,6 +20,17 @@ class UsersListView(DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Пользователи'
+        return context_data
+
+
+# Заказы CBV
+class OrderListView(ListView):
+    model = Order
+    template_name = 'adminapp/order_list.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Заказы'
         return context_data
 
 
