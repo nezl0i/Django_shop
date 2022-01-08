@@ -14,6 +14,11 @@ class OrderListView(ListView):
     model = Order
     # template_name = 'ordersapp/order_list.html'
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Заказы'
+        return context_data
+
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
 
@@ -27,6 +32,7 @@ class OrderCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        context_data['title'] = 'Создание заказа'
 
         if self.request.method == 'POST':
             formset = OrderFormSet(self.request.POST)
@@ -71,6 +77,7 @@ class OrderUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        context_data['title'] = 'Обновление заказа'
 
         if self.request.method == 'POST':
             formset = OrderFormSet(self.request.POST, instance=self.object)
@@ -100,11 +107,21 @@ class OrderUpdateView(UpdateView):
 class OrderDetailView(DetailView):
     model = Order
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Просмотр заказа'
+        return context_data
+
 
 class OrderDeleteView(DeleteView):
     model = Order
     template_name = 'ordersapp/order_confirm_delete.html'
     success_url = reverse_lazy('ordersapp:list')
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Удаление заказа'
+        return context_data
 
 
 def complete(request, pk):
