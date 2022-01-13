@@ -47,7 +47,7 @@ window.onload = function () {
     //     orderSummaryUpdate(price_arr[orderitem_num], delta_quantity);
     // });
 
-    $('.order_form').on('click', 'input[type="number"]', function () {
+    $('.order').on('click', 'input[type="number"]', function () {
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
         if (price_arr[orderitem_num]) {
@@ -70,7 +70,7 @@ window.onload = function () {
     }
 
 
-    $('.order_form select').change(function () {
+    $('.order select').change(function () {
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
         var orderitem_product_pk = target.options[target.selectedIndex].value;
