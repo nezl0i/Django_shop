@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -153,7 +153,7 @@ LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_ERROR_URL = '/'
 
-BASE_URL = 'http://localhost:7444'
+BASE_URL = 'http://localhost:8000'
 
 API_VERSION = 5.131
 
