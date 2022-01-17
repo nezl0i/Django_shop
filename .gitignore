@@ -1,5 +1,4 @@
 .idea
 .env
 __pycache__/
-media
-db.sqlite3_old
+db.sqlite3
