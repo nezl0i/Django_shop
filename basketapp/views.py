@@ -26,7 +26,7 @@ class BasketView(ListView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Корзина'
-        context_data['basket_list'] = Basket.objects.filter(user=self.request.user)
+        context_data['basket_list'] = Basket.objects.filter(user=self.request.user).select_related()
         return context_data
 
 
