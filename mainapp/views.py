@@ -35,7 +35,7 @@ class IndexView(ListView):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = self.title
         context_data['date'] = datetime.now()
-        context_data['products'] = Product.objects.all()[:4]
+        context_data['products'] = Product.objects.all().select_related()[:4]
         return context_data
 
 
