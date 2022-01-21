@@ -9,18 +9,18 @@ from basketapp.models import Basket
 from mainapp.models import Product
 
 
-# @login_required
-# def basket(request):
-#     context = {
-#         'title': 'Корзина',
-#         'basket_list': Basket.objects.filter(user=request.user)
-#
-#     }
-#     return render(request, 'basketapp/basket.html', context)
+@login_required
+def basket(request):
+    context = {
+        'title': 'Корзина',
+        'basket_list': Basket.objects.filter(user=request.user).select_related()
 
-class BasketView(ListView):
-    model = Basket
-    template_name = 'basketapp/basket.html'
+    }
+    return render(request, 'basketapp/basket.html', context)
+
+# class BasketView(ListView):
+#     model = Basket
+#     template_name = 'basketapp/basket.html'
     # success_url = reverse_lazy('basketapp:basket')
     #
     # def get_context_data(self, **kwargs):
