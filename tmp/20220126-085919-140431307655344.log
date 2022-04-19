@@ -1,0 +1,11 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Account verify
+From: geekshop@gb.local
+To: dran@gb.local
+Date: Wed, 26 Jan 2022 08:59:19 -0000
+Message-ID: <164318755940.30132.6263019538058484224@swift>
+
+http://localhost:8008/auth/verify/dran@gb.local/c13247cca8f9abccc987b59e8ccfc7523da59c32
+-------------------------------------------------------------------------------

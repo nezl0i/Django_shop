@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -107,6 +108,14 @@ class ProductCategoryUpdateView(DataMixin, UpdateView):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Редактирование категории'
         return context_data
+
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.product_set.update(price=F('price'))
+
+        return super().form_valid(form)
 
 
 # Удаление категории CBV
